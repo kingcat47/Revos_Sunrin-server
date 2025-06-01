@@ -1,18 +1,20 @@
 import styles from './styles.module.scss'
 
 interface ArticleProps {
-    title: string
-    description: string
-    image_url: string
+    title: string;
+    description: string;
+    image_url ?: string;
+    className ?: string;
 }
 
-export default function Article_bigComponent({title,description,image_url}: ArticleProps) {
+export default function Article_bigComponent({title,description, image_url, className}: ArticleProps) {
     return(
-        <div className={styles.container}>
-            <img alt={''} src={image_url} />
+        <div className={[styles.container, className].join("")}>
+            <img className={styles.main_image} alt={''} src={image_url ? image_url : '/src/assets/mok/apple_handphon2-upgrade.png'}/>
+            {/*<span className={styles.category_tag}>스포츠</span>*/}
             <div className={styles.textfield}>
-                <h3>{title}</h3>
-                <span>{description}</span>
+                <span className={styles.title}>{title}</span>
+                <span className={styles.description}>{description}</span>
             </div>
         </div>
     )

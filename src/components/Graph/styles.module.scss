@@ -1,34 +1,45 @@
 // 메인 컨테이너
 .container {
-  width: 100%;
-  max-width: 64rem; // max-w-4xl
-  margin: 0 auto;
+  min-width: 750px;
+  height: 500px;
+  min-height: 400px;
   padding: 1.5rem;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
 }
 
 // 차트 래퍼
 .chartWrapper {
+  width: 100%;
+  height: 100%;
   background-color: white;
   border: 1px solid #e5e7eb; // border-gray-200
   border-radius: 0.5rem;
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 // 제목
 .title {
-  font-size: 1.125rem; // text-lg
+  font-family: SUIT;
+  font-size: 24px; // text-lg
   font-weight: 500; // font-medium
-  color: #374151; // text-gray-700
-  margin-bottom: 1.5rem;
+  color: #5068A9; // text-gray-700
+  margin: 0;
+  padding: 0;
 }
 
 // 차트 컨테이너
 .chartContainer {
-  margin-bottom: 1.5rem;
+  flex: 1;
+  width: 100%;
+  min-height: 300px;
 }
 
-// 툴팁 스타일
+// 툴크 스타일
 .tooltip {
   background-color: white;
   padding: 0.75rem;
@@ -65,14 +76,14 @@
 .legendColorPrev {
   width: 0.75rem; // w-3
   height: 0.75rem; // h-3
-  background-color: #2563eb; // bg-blue-600
+  background-color: #2B3695; // bg-blue-600
   border-radius: 0.125rem; // rounded-sm
 }
 
 .legendColorCurrent {
   width: 0.75rem;
   height: 0.75rem;
-  background-color: #8b5cf6; // bg-purple-500
+  background-color: #6976EB; // bg-purple-500
   border-radius: 0.125rem;
 }
 
@@ -80,45 +91,8 @@
   color: #4b5563; // text-gray-600
 }
 
-// 통계 그리드
-.statsGrid {
-  margin-top: 1.5rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 
-.statCard {
-  background-color: #f9fafb; // bg-gray-50
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
 
-.statTitle {
-  font-size: 0.875rem; // text-sm
-  font-weight: 500; // font-medium
-  color: #4b5563; // text-gray-600
-  margin-bottom: 0.5rem;
-}
 
-.statValueBlue {
-  font-size: 1.125rem; // text-lg
-  font-weight: 600; // font-semibold
-  color: #2563eb; // text-blue-600
-}
 
-.statValueGreen {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #16a34a; // text-green-600
-}
-
-.statValueGray {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #374151; // text-gray-700
-}

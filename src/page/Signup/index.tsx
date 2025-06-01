@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import {ButtonComponent, InputComponent, SvgIcon,GlassComponent} from "../../components";
+import {ButtonComponent, InputComponent, SvgIcon} from "../../components";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import LogoIcon from "../../assets/icon/LogoIcon.svg?react"
@@ -20,7 +20,7 @@ export default function Signup(){
         <div className={styles.right}>
           <SvgIcon icon={<LogoIcon />} color={'#5068A9'} width={100} height={100}></SvgIcon>
           <span>Revos</span>
-          <GlassComponent></GlassComponent>
+
         </div>
       </div>
     </div>

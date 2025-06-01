@@ -2,21 +2,27 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import styles from './styles.module.scss';
 
 const newsData = [
-    { category: '정치', 한달전: 285, 이번달: 320 },
-    { category: '경제', 한달전: 215, 이번달: 186 },
-    { category: '사회/IT', 한달전: 165, 이번달: 394 },
-    { category: '사회', 한달전: 95, 이번달: 67 },
-    { category: '국제', 한달전: 75, 이번달: 89 },
-    { category: '스포츠', 한달전: 55, 이번달: 45 },
-    { category: '연예', 한달전: 45, 이번달: 38 },
-    { category: '기타', 한달전: 0, 이번달: 0 }
-];
+    { category: '연예', 전체유저: 5, 나: 4 },         // 연예 뉴스: 전체유저 평균 5번, 나는 4번 읽음
+    { category: '과학/IT', 전체유저: 16, 나: 39 },    // IT 뉴스: 전체유저 평균 16번, 나는 39번 읽음 (IT에 관심 많음)
+    { category: '사회', 전체유저: 12, 나: 8 },        // 사회 뉴스: 전체유저 평균 12번, 나는 8번 읽음
+    { category: '정치', 전체유저: 28, 나: 32 },       // 정치 뉴스: 전체유저 평균 28번, 나는 32번 읽음 (하루 1번 정도)
+    { category: '문화', 전체유저: 6, 나: 15 },        // 문화 뉴스: 전체유저 평균 6번, 나는 15번 읽음
+    { category: '스포츠', 전체유저: 7, 나: 5 },       // 스포츠 뉴스: 전체유저 평균 7번, 나는 5번 읽음
+    { category: '경제', 전체유저: 22, 나: 19 },       // 경제 뉴스: 전체유저 평균 22번, 나는 19번 읽음
+    { category: '국제', 전체유저: 9, 나: 11 },        // 국제 뉴스: 전체유저 평균 9번, 나는 11번 읽음
+    { category: '기타', 전체유저: 2, 나: 1 }
+];//나중에 json이런 형식으로 받아오도록 대체할거
 
-export default function GraphComponents() {
+interface GraphProps {
+    className ?: string;
+}
+
+export default function GraphComponents({className}: GraphProps) {
     interface TooltipPayload {
         color: string;
         dataKey: string;
         value: number;
+
     }
 
     interface CustomTooltipProps {
@@ -41,18 +47,18 @@ export default function GraphComponents() {
         return null;
     };
 
-    const maxValue = Math.max(...newsData.flatMap(item => [item.한달전, item.이번달]));
+    const maxValue = Math.max(...newsData.flatMap(item => [item.전체유저, item.나]));
     const yAxisMax = Math.ceil(maxValue / 100) * 100;
 
     return (
-        <div className={styles.container}>
+        <div className={[styles.container, className].join("")}>
             <div className={styles.chartWrapper}>
                 {/* 제목 */}
-                <h2 className={styles.title}>History</h2>
+                <h2 className={styles.title}>Record</h2>
 
                 {/* 그래프 */}
                 <div className={styles.chartContainer}>
-                    <ResponsiveContainer width="100%" height={300}>
+                    <ResponsiveContainer width="100%" height={350}>
                         <BarChart
                             data={newsData}
                             margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
@@ -75,14 +81,14 @@ export default function GraphComponents() {
                             />
                             <Tooltip content={<CustomTooltip />} />
                             <Bar
-                                dataKey="한달전"
-                                fill="#4F46E5"
+                                dataKey="전체유저"
+                                fill="#2B3695"
                                 radius={2}
                                 barSize={20}
                             />
                             <Bar
-                                dataKey="이번달"
-                                fill="#8B5CF6"
+                                dataKey="나"
+                                fill="#6976EB"
                                 radius={2}
                                 barSize={20}
                             />
@@ -94,33 +100,11 @@ export default function GraphComponents() {
                 <div className={styles.legend}>
                     <div className={styles.legendItem}>
                         <div className={styles.legendColorPrev}></div>
-                        <span className={styles.legendText}>전체 유저</span>
+                        <span className={styles.legendText}>전체유저</span>
                     </div>
                     <div className={styles.legendItem}>
                         <div className={styles.legendColorCurrent}></div>
                         <span className={styles.legendText}>나</span>
-                    </div>
-                </div>
-
-                {/* 상위 값 표시 */}
-                <div className={styles.statsGrid}>
-                    <div className={styles.statCard}>
-                        <h4 className={styles.statTitle}>이번 달 최고</h4>
-                        <div className={styles.statValueBlue}>
-                            사회/IT: 394
-                        </div>
-                    </div>
-                    <div className={styles.statCard}>
-                        <h4 className={styles.statTitle}>가장 큰 증가</h4>
-                        <div className={styles.statValueGreen}>
-                            사회/IT: +229
-                        </div>
-                    </div>
-                    <div className={styles.statCard}>
-                        <h4 className={styles.statTitle}>총 조회수</h4>
-                        <div className={styles.statValueGray}>
-                            이번 달: {newsData.reduce((sum, item) => sum + item.이번달, 0).toLocaleString()}
-                        </div>
                     </div>
                 </div>
             </div>

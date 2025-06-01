@@ -4,7 +4,7 @@ import { Link} from 'react-router-dom';
 
 export default function NavbarItem() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [subject, setSubject] = useState('분야');
+    const [subject, setSubject] = useState('전체');
 
 
     const handleDropdownClick = (prop: string) => {
@@ -31,6 +31,12 @@ export default function NavbarItem() {
         </ul>
     {isDropdownOpen && (
         <ul className={styles.dropdown}>
+            <div
+                className={styles.dropdown_item}
+                onClick={() => handleDropdownClick('전체')}
+            >
+                전체
+            </div>
             <div
                 className={styles.dropdown_item}
                 onClick={() => handleDropdownClick('정치')}

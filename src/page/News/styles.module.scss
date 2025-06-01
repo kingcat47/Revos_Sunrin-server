@@ -1,9 +1,28 @@
 .container {
-  
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .helement{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3em;
+    gap: 3rem;
+  }
+  padding: 6em 2em 0em 1em;
 
   span {
     background: transparent;
     color: #000;
     text-decoration: none;
+  }
+
+  .newslist{
+    gap: 1em;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5em;
   }
 }
