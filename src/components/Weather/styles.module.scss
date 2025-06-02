@@ -1,0 +1,54 @@
+.weatherCard {
+  max-width: 100%;
+  width: 450px;
+  height: 140px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+  color: white;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Helvetica', sans-serif;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.city {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.temperature {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.condition {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.container {
+  text-decoration: none;  // 밑줄 제거
+  color: inherit;         // 기본 색상 유지
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;  // hover 시에도 밑줄 제거
+  }
+}

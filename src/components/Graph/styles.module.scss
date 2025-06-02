@@ -1,9 +1,8 @@
 // 메인 컨테이너
 .container {
-  min-width: 750px;
-  height: 500px;
+  max-width: 100%;
+  min-width: 60%;
   min-height: 400px;
-  padding: 1.5rem;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -17,7 +16,7 @@
   background-color: white;
   border: 1px solid #e5e7eb; // border-gray-200
   border-radius: 0.5rem;
-  padding: 1.5rem;
+  padding: 5px;
   display: flex;
   flex-direction: column;
 }

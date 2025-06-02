@@ -4,14 +4,22 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 6em 200px 0em 200px;
+  //overflow: hidden;
   .helement{
     display: flex;
-    flex-direction: row;
     align-items: center;
     margin-bottom: 3em;
-    gap: 3rem;
+    gap: 10px;
+    .hright{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+      border-radius: 20px 20px 40px 40px;
+    }
   }
-  padding: 6em 2em 0em 1em;
+
 
   span {
     background: transparent;
