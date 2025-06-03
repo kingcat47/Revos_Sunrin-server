@@ -5,7 +5,7 @@ import { Link} from 'react-router-dom';
 export default function NavbarItem() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [subject, setSubject] = useState('전체');
-
+    const [isLogin, setisLogin] = useState(false);
 
     const handleDropdownClick = (prop: string) => {
         setSubject(prop);
@@ -18,7 +18,9 @@ export default function NavbarItem() {
             <li className={styles.menu_items}><Link to="/news">뉴스</Link></li>
             <li className={styles.menu_items}><Link to="/board">게시판</Link></li>
             <li className={styles.menu_items}><Link to="/write">게시물 작성</Link></li>
-            <li className={styles.menu_items}><Link to="/profile">프로필</Link></li>
+            {!isLogin && <li className={styles.menu_items}><Link to="/signin">로그인</Link></li>}
+            {isLogin && <li className={styles.menu_items}><Link to="/profile">프로필</Link></li>}
+
 
             <li
                 className={styles.menu_items}

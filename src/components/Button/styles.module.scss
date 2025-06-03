@@ -1,7 +1,7 @@
 .container {
   display: flex;
-  width: 240px;
-  height: 72px;
+  width: 300px;
+  height: 40px;
   padding: 15px 0px;
   justify-content: center;
   align-items: center;
@@ -12,9 +12,7 @@
 
 .text {
   color: #fff;
-  font-family: SUIT;
-  font-size: 33.529px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  font-family: SUIT,sans-serif;
+  font-size: 20px;
+  user-select: none;
 }

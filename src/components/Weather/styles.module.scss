@@ -1,54 +1,68 @@
-.weatherCard {
-  max-width: 100%;
-  width: 450px;
+.container {
+  text-decoration: none;
+  position: relative;
+}
+
+.mianCard {
+  min-width: 400px;
   height: 140px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+  padding: 40px 24px 24px 24px;
   color: white;
-  padding: 1.2rem;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-family: 'Helvetica', sans-serif;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s ease, background 0.5s ease;
+}
 
-  &:hover {
-    cursor: pointer;
-  }
+.daytime {
+  background: linear-gradient(145deg, #446ee5, #243fcb);
+}
+
+.nighttime {
+  background: linear-gradient(145deg, #2a2a38, #020D45);
+}
+
+.mianCard:hover {
+  //transform: scale(1.03);
 }
 
 .city {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 500;
+  opacity: 0.85;
 }
-
+.top{
+  position: absolute;
+  top:10px;
+  left: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-size: 40px;
+  font-family: Helvetica, sans-serif;
+}
 .row {
   display: flex;
-  align-items: center;
-  margin-top: 0.5rem;
+  width: 80%;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 .icon {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
 }
 
 .temperature {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 3rem;
+  font-family: Helvetica, sans-serif;
 }
 
 .condition {
   font-size: 1rem;
-  opacity: 0.9;
-}
-
-.container {
-  text-decoration: none;  // 밑줄 제거
-  color: inherit;         // 기본 색상 유지
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: none;  // hover 시에도 밑줄 제거
-  }
+  color: #dddddd;
+  text-transform: capitalize;
+  margin-top: 2px;
 }

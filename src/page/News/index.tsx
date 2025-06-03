@@ -1,7 +1,9 @@
 import styles from './styles.module.scss'
 import {Article_bigComponent, Article_normalComponent, GraphComponent, WeatherComponent} from "../../components";
 
+
 export default function NewsPage() {
+
     return(
         <div className={styles.container}>
             <div className={styles.helement}>
