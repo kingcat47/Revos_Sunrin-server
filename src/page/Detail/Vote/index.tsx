@@ -17,86 +17,65 @@ interface Vote {
 }
 
 export default function Vote() {
-    const { id } = useParams<{ id: string }>(); // article id
+    const { id } = useParams<{ id: string }>();
     const [votes, setVotes] = useState<Vote[]>([]);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [selectedChoices, setSelectedChoices] = useState<{ [voteId: string]: string }>({});
     const [isLoading, setIsLoading] = useState(true);
-    const [hasVoted, setHasVoted] = useState<{ [voteId: string]: boolean }>({});
+    const [hasVoted, setHasVoted] = useState(false);
     const navigation = useNavigate();
+
+    // 투표 데이터 불러오기
+    const fetchVotes = async () => {
+        setIsLoading(true);
+        try {
+            const res = await axios.get(`http://localhost:8000/get/votes_by_article/${id}`);
+            if (Array.isArray(res.data)) {
+                setVotes(res.data);
+            } else {
+                setVotes([]);
+            }
+        } catch {
+            setVotes([]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         if (!id) return;
-
-        setIsLoading(true);
-        // 해당 기사의 투표들을 가져오기
-        axios.get(`http://localhost:8000/get/votes_by_article/${id}`)
-            .then(res => {
-                console.log('받은 투표 데이터:', res.data);
-                if (Array.isArray(res.data)) {
-                    setVotes(res.data);
-                } else {
-                    setVotes([]);
-                }
-            })
-            .catch(error => {
-                console.error('투표 데이터 로딩 중 오류:', error);
-                setVotes([]);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+        fetchVotes();
     }, [id]);
 
     const handleChoiceSelect = (voteId: string, choiceId: string) => {
-        if (hasVoted[voteId]) return; // 이미 투표한 경우 선택 불가
-
+        if (hasVoted) return;
         setSelectedChoices(prev => ({
             ...prev,
             [voteId]: choiceId
         }));
     };
 
-    const handleVoteSubmit = async (voteId: string) => {
-        const selectedChoiceId = selectedChoices[voteId];
-        if (!selectedChoiceId) {
-            alert('선택지를 선택해주세요.');
+    const handleAllVoteSubmit = async () => {
+        const allSelected = votes.every(vote => selectedChoices[vote.id]);
+        if (!allSelected) {
+            alert('모든 투표에 선택지를 선택해주세요.');
             return;
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/post/vote/submit', {
-                voteId: voteId,
-                choiceId: selectedChoiceId
-            });
+            const payload = votes.map(vote => ({
+                voteId: vote.id,
+                choiceId: selectedChoices[vote.id]
+            }));
+
+            const response = await axios.post('http://localhost:8000/post/vote/submit', payload);
 
             if (response.status === 200) {
-                // 투표 완료 상태 업데이트
-                setHasVoted(prev => ({
-                    ...prev,
-                    [voteId]: true
-                }));
-
-                // 투표 결과 업데이트
-                setVotes(prev => prev.map(vote => {
-                    if (vote.id === voteId) {
-                        return {
-                            ...vote,
-                            choices: vote.choices.map(choice => {
-                                if (choice.id === selectedChoiceId) {
-                                    return { ...choice, vote_count: choice.vote_count + 1 };
-                                }
-                                return choice;
-                            })
-                        };
-                    }
-                    return vote;
-                }));
-
-                alert('투표가 완료되었습니다!');
+                setHasVoted(true);
+                // 투표 결과를 다시 불러옴
+                fetchVotes();
             }
-        } catch (error) {
-            console.error('투표 제출 중 오류:', error);
+        } catch {
             alert('투표 제출 중 오류가 발생했습니다.');
         }
     };
@@ -111,15 +90,6 @@ export default function Vote() {
         if (currentSlide > 0) {
             setCurrentSlide(currentSlide - 1);
         }
-    };
-
-    const getTotalVotes = (vote: Vote) => {
-        return vote.choices.reduce((total, choice) => total + choice.vote_count, 0);
-    };
-
-    const getPercentage = (choice: Choice, totalVotes: number) => {
-        if (totalVotes === 0) return 0;
-        return Math.round((choice.vote_count / totalVotes) * 100);
     };
 
     if (isLoading) {
@@ -151,57 +121,45 @@ export default function Vote() {
                 <div className={styles.currentSlide}>
                     {votes.length > 0 && (() => {
                         const vote = votes[currentSlide];
-                        const totalVotes = getTotalVotes(vote);
-                        const currentVoteHasVoted = hasVoted[vote.id];
-
                         return (
                             <div className={styles.voteCard}>
                                 <div className={styles.voteTitleContainer}>
                                     <h3 className={styles.voteTitle}>{vote.title}</h3>
                                 </div>
-
                                 <div className={styles.choices}>
                                     {vote.choices.map((choice) => {
+                                        // 투표 전: 선택지 선택, 투표 후: 결과 표시
                                         const isSelected = selectedChoices[vote.id] === choice.id;
-                                        const percentage = getPercentage(choice, totalVotes);
-
                                         return (
                                             <div
                                                 key={choice.id}
-                                                className={`${styles.choice} ${isSelected ? styles.selected : ''} ${currentVoteHasVoted ? styles.voted : ''}`}
-                                                onClick={() => handleChoiceSelect(vote.id, choice.id)}
+                                                className={
+                                                    hasVoted
+                                                        ? styles.resultChoice
+                                                        : `${styles.choice} ${isSelected ? styles.selected : ''}`
+                                                }
+                                                onClick={
+                                                    hasVoted
+                                                        ? undefined
+                                                        : () => handleChoiceSelect(vote.id, choice.id)
+                                                }
                                             >
                                                 <div className={styles.choiceContent}>
                                                     <span className={styles.choiceText}>{choice.text}</span>
-                                                    {currentVoteHasVoted && (
-                                                        <div className={styles.voteResult}>
-                                                            <span className={styles.percentage}>{percentage}%</span>
-                                                            <span className={styles.count}>({choice.vote_count}표)</span>
-                                                        </div>
+                                                    {hasVoted && (
+                                                        <span className={styles.voteCount}>
+                                                            {choice.vote_count}표
+                                                        </span>
                                                     )}
                                                 </div>
-                                                {currentVoteHasVoted && (
-                                                    <div
-                                                        className={styles.progressBar}
-                                                        style={{ width: `${percentage}%` }}
-                                                    />
-                                                )}
                                             </div>
                                         );
                                     })}
                                 </div>
-
                                 <div className={styles.voteActions}>
-                                    {!currentVoteHasVoted ? (
-                                        <ButtonComponent
-                                            text="투표하기"
-                                            onClick={() => handleVoteSubmit(vote.id)}
-                                            disabled={!selectedChoices[vote.id]}
-                                            className="vote-button"
-                                        />
-                                    ) : (
+                                    {hasVoted && (
                                         <div className={styles.voteComplete}>
-                                            <p>투표 완료! 총 {totalVotes}명이 참여했습니다.</p>
+                                            <p>투표 결과</p>
                                         </div>
                                     )}
                                 </div>
@@ -231,6 +189,13 @@ export default function Vote() {
             )}
 
             <div className={styles.bottomActions}>
+                {!hasVoted && currentSlide === votes.length - 1 && (
+                    <ButtonComponent
+                        text="투표하기"
+                        onClick={handleAllVoteSubmit}
+                        className={styles.submit}
+                    />
+                )}
                 <ButtonComponent
                     text="뉴스로 돌아가기"
                     onClick={() => navigation('/news')}
