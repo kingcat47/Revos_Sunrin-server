@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { ButtonComponent } from "../../../components/index";
 import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
+import { CommentWindow } from "../../../components";
 
 interface Choice {
     id: string;
@@ -216,6 +217,9 @@ export default function Vote() {
                     onClick={() => navigation('/news')}
                     className={styles.backButton}
                 />
+                {hasVoted && (
+                    <CommentWindow voteId={votes[currentSlide].id} />
+                )}
             </div>
         </div>
     );
