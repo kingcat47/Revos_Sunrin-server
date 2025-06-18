@@ -72,7 +72,6 @@ export default function Vote() {
 
             if (response.status === 200) {
                 setHasVoted(true);
-                // 투표 결과를 다시 불러옴
                 fetchVotes();
             }
         } catch {
@@ -90,6 +89,15 @@ export default function Vote() {
         if (currentSlide > 0) {
             setCurrentSlide(currentSlide - 1);
         }
+    };
+
+    const getTotalVotes = (vote: Vote) => {
+        return vote.choices.reduce((total, choice) => total + choice.vote_count, 0);
+    };
+
+    const getPercentage = (choice: Choice, totalVotes: number) => {
+        if (totalVotes === 0) return 0;
+        return Math.round((choice.vote_count / totalVotes) * 100);
     };
 
     if (isLoading) {
@@ -121,6 +129,7 @@ export default function Vote() {
                 <div className={styles.currentSlide}>
                     {votes.length > 0 && (() => {
                         const vote = votes[currentSlide];
+                        const totalVotes = getTotalVotes(vote);
                         return (
                             <div className={styles.voteCard}>
                                 <div className={styles.voteTitleContainer}>
@@ -128,38 +137,44 @@ export default function Vote() {
                                 </div>
                                 <div className={styles.choices}>
                                     {vote.choices.map((choice) => {
-                                        // 투표 전: 선택지 선택, 투표 후: 결과 표시
                                         const isSelected = selectedChoices[vote.id] === choice.id;
+                                        const percentage = getPercentage(choice, totalVotes);
+
                                         return (
                                             <div
                                                 key={choice.id}
-                                                className={
-                                                    hasVoted
-                                                        ? styles.resultChoice
-                                                        : `${styles.choice} ${isSelected ? styles.selected : ''}`
-                                                }
-                                                onClick={
-                                                    hasVoted
-                                                        ? undefined
-                                                        : () => handleChoiceSelect(vote.id, choice.id)
-                                                }
+                                                className={`
+                                                    ${styles.choice}
+                                                    ${isSelected ? styles.selected : ''}
+                                                    ${hasVoted ? styles.voted : ''}
+                                                `}
+                                                onClick={() => !hasVoted && handleChoiceSelect(vote.id, choice.id)}
                                             >
                                                 <div className={styles.choiceContent}>
                                                     <span className={styles.choiceText}>{choice.text}</span>
                                                     {hasVoted && (
-                                                        <span className={styles.voteCount}>
-                                                            {choice.vote_count}표
-                                                        </span>
+                                                        <div className={styles.voteResult}>
+                                                            <span className={styles.percentage}>{percentage}%</span>
+                                                            <span className={styles.count}>({choice.vote_count}표)</span>
+                                                        </div>
                                                     )}
                                                 </div>
+                                                {hasVoted && (
+                                                    <div
+                                                        className={styles.progressBar}
+                                                        style={{ width: `${percentage}%` }}
+                                                    />
+                                                )}
                                             </div>
                                         );
                                     })}
                                 </div>
                                 <div className={styles.voteActions}>
-                                    {hasVoted && (
+                                    {!hasVoted ? (
+                                        <></>
+                                    ) : (
                                         <div className={styles.voteComplete}>
-                                            <p>투표 결과</p>
+                                            <p>투표 결과! 총 {totalVotes}명이 참여했습니다.</p>
                                         </div>
                                     )}
                                 </div>
