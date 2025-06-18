@@ -1,8 +1,8 @@
 import styles from './styles.module.scss'
-import {ButtonComponent, InputComponent} from "../../components";
+import {ButtonComponent, InputComponent} from "../../../components";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axiosInstance from "../../utils/axios.ts";
+import axiosInstance from "../../../utils/axios.ts";
 export default function Signin(){
   const navigate = useNavigate();
   const [id, setId] = useState("");

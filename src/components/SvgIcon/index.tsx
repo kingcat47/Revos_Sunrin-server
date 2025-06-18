@@ -1,7 +1,7 @@
-import React, {type CSSProperties, type ReactElement} from "react";
+import React, {type CSSProperties, type ReactElement, type SVGProps} from "react";
 
 interface Props {
-  icon: ReactElement; // ReactElement 로 제한
+    icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   color: string;
   width?: number;
   height?: number;
@@ -13,17 +13,13 @@ export default function SvgIcon({
                            width,
                            height,
                          }: Props): ReactElement {
-  const styledIcon = React.cloneElement(
-      icon as React.ReactElement<React.HTMLAttributes<HTMLElement>>,
-      {
-        style: {
-          fill: color,
-          color: color,
-          width: width ? `${width}px` : undefined,
-          height: height ? `${height}px` : "auto",
-        } as CSSProperties,
-      }
-  );
+  const style = {
+    fill: color,
+    color: color,
+    width: width ? `${width}px` : undefined,
+    height: height ? `${height}px` : "auto",
+  } as CSSProperties;
 
-  return <>{styledIcon}</>;
+  const props: SVGProps<SVGSVGElement> = { style };
+  return <>{React.isValidElement(icon) ? React.cloneElement(icon, props) : React.createElement(icon, props)}</>;
 }

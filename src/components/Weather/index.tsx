@@ -1,18 +1,15 @@
+
 import styles from './styles.module.scss';
 import {useEffect, useState} from "react";
 import {getWeatherData} from "../../utils/axios.ts";
 import SvgIcon from '../SvgIcon/index.tsx';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
+
 import SunyIcon from '../../assets/icon/Weather/SunyIcon.svg?react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
+
 import CloudyIcon from '../../assets/icon/Weather/CloudIcon.svg?react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
+
 import RainyIcon from '../../assets/icon/Weather/RainIcon.svg?react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
+
 import SnowyIcon from '../../assets/icon/Weather/SnowIcon.svg?react';
 
 

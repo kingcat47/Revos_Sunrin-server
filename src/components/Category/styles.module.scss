@@ -1,0 +1,24 @@
+.container{
+  display: flex;
+  width: 120px;
+  height: 60px;
+  padding: 0px var(--Spacing-Large, 24px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--Spacing-Narrow, 6px);
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  &:hover {
+    border-radius: 10px;
+    border: 1px solid var(--Foundation-Blue-Normal, #5068A9);
+    background: #EDF2F7;
+    cursor: pointer;
+    transform: translateY(-1px);
+  }
+}
+
+.text{
+  color: #4A5568;
+}

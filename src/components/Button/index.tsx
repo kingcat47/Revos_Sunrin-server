@@ -2,7 +2,7 @@ import styles from "./styles.module.scss";
 
 interface ButtonProps {
   text?: string;
-  onClick?: () => void;
+  onClick?: () => void ;
   className?: string;
 }
 

@@ -13,6 +13,7 @@
   align-items: center;
   gap: 20px;
   transition: transform 0.3s ease, background 0.5s ease;
+  backdrop-filter: blur(10px);
 }
 
 .daytime {

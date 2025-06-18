@@ -5,8 +5,9 @@ import { useEffect } from 'react';
 
 function App() {
     const location = useLocation()
-    const try_login = location.pathname === '/signin' || location.pathname === '/signup'
-
+    const try_login = location.pathname === '/signin' || location.pathname === '/signup';
+    const try_post = location.pathname.startsWith('/post');
+    
     useEffect(() => {
         if (try_login) {
             document.body.classList.add('no-scroll');
@@ -17,7 +18,7 @@ function App() {
 
     return (
         <div className={styles.container}>
-            {!try_login && <NavbarComponent/>}
+            {!try_login && !try_post && <NavbarComponent/>}
             <Outlet />
         </div>
     )

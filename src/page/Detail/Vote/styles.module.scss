@@ -1,0 +1,293 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  h2 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.slideIndicator {
+  background: #f0f0f0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.slideContainer {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  background: white;
+}
+
+.currentSlide {
+  padding: 30px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.voteCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.voteTitleContainer {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.voteTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: center;
+  word-wrap: break-word;
+  word-break: keep-all;
+  line-height: 1.4;
+  padding: 0 10px;
+}
+
+.choices {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.choice {
+  position: relative;
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+  overflow: hidden;
+
+  &:hover {
+    border-color: #4A90E2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.2);
+  }
+
+  &.selected {
+    border-color: #4A90E2;
+    background: #f8fbff;
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 24px;
+      height: 24px;
+      background: #4A90E2;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  &.voted {
+    cursor: default;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.choiceContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.choiceText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.voteResult {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.percentage {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4A90E2;
+}
+
+.count {
+  font-size: 14px;
+  color: #666;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4A90E2, #67B7FF);
+  transition: width 0.5s ease;
+  z-index: 1;
+}
+
+.voteSubmit {
+  text-align: center;
+}
+
+.voteActions {
+  margin-top: auto;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.voteComplete {
+  text-align: center;
+  padding: 20px;
+  background: #f0f8ff;
+  border-radius: 8px;
+  border: 1px solid #4A90E2;
+
+  p {
+    margin: 0;
+    color: #4A90E2;
+    font-weight: 500;
+  }
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.navButton {
+  padding: 12px 24px;
+  border: 2px solid #4A90E2;
+  background: white;
+  color: #4A90E2;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+
+  &:hover:not(.disabled) {
+    background: #4A90E2;
+    color: white;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #ccc;
+    color: #ccc;
+  }
+}
+
+.bottomActions {
+  text-align: center;
+}
+
+.backButton {
+  background: #f5f5f5 !important;
+  color: #666 !important;
+  border: 1px solid #ddd !important;
+
+  &:hover {
+    background: #e0e0e0 !important;
+  }
+}
+
+// ButtonComponent 스타일 오버라이드
+:global(.vote-button) {
+  width: 100%;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #4A90E2, #67B7FF);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(74, 144, 226, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// 반응형 디자인
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .slide {
+    padding: 20px;
+  }
+
+  .voteTitle {
+    font-size: 20px;
+  }
+
+  .choice {
+    padding: 15px;
+  }
+
+  .choiceText {
+    font-size: 14px;
+  }
+
+  .navigation {
+    gap: 15px;
+  }
+
+  .navButton {
+    padding: 10px 20px;
+    font-size: 14px;
+    min-width: 70px;
+  }
+}
