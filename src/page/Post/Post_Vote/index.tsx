@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import { InputComponent, ButtonComponent } from "../../../components/index";
 import axios from 'axios';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Choice {
     text: string;
@@ -16,24 +16,11 @@ interface Vote {
 export default function Post_Vote_Page() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigation = useNavigate();
-    const [searchParams] = useSearchParams();
-    const [articleId, setArticleId] = useState<string | null>(null);
     const [votes, setVotes] = useState<Vote[]>([
         { title: "", choices: [{ text: "" }] },
         { title: "", choices: [{ text: "" }] },
         { title: "", choices: [{ text: "" }] }
     ]);
-
-    useEffect(() => {
-        const articleIdFromUrl = searchParams.get('articleId');
-        if (articleIdFromUrl) {
-            setArticleId(articleIdFromUrl);
-        } else {
-            // Article ID가 없으면 이전 페이지로 돌아가기
-            alert('Article ID가 없습니다. 다시 시도해주세요.');
-            navigation('/post/article');
-        }
-    }, [searchParams, navigation]);
 
     const handleVoteTitleChange = (voteIndex: number, title: string) => {
         setVotes(votes.map((vote, idx) =>
@@ -80,11 +67,6 @@ export default function Post_Vote_Page() {
     };
 
     const handleSubmit = async () => {
-        if (!articleId) {
-            alert('Article ID가 없습니다. 다시 시도해주세요.');
-            return;
-        }
-
         const validVotes = votes.filter(vote =>
             vote.title.trim() !== '' &&
             vote.choices.length > 0 &&
@@ -97,13 +79,7 @@ export default function Post_Vote_Page() {
         }
 
         try {
-            // Article ID와 함께 투표 데이터 전송
-            const voteData = {
-                articleId: articleId,
-                votes: validVotes
-            };
-
-            const response = await axios.post('http://localhost:8000/post/vote/create', voteData);
+            const response = await axios.post('http://localhost:8000/post/vote/create', validVotes);
             if (response.status === 200) {
                 alert('투표가 성공적으로 생성되었습니다.');
                 navigation('/news');
@@ -125,11 +101,6 @@ export default function Post_Vote_Page() {
             setCurrentSlide(currentSlide - 1);
         }
     };
-
-    // Article ID가 로드되지 않았으면 로딩 표시
-    if (!articleId) {
-        return <div>로딩 중...</div>;
-    }
 
     return (
         <div className={styles.container}>

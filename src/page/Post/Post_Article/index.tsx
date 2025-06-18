@@ -42,8 +42,7 @@ export default function Post_Article_Page() {
         })
             .then(response => {
                 console.log('Success:', response.data);
-                const articleId = response.data.id || response.data.articleId;
-                navigation(`/post/vote?articleId=${articleId}`);
+                navigation('vote')
             })
             .catch(error => {
                 console.error('Error:', error);
