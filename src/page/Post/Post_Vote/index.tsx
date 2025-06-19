@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import { InputComponent, ButtonComponent } from "../../../components/index";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface Choice {
     text: string;
@@ -16,6 +16,10 @@ interface Vote {
 export default function Post_Vote_Page() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const navigation = useNavigate();
+    const location = useLocation();
+    // 글 작성 후 vote 페이지로 이동할 때 articleId를 state로 넘겨받는다고 가정
+    const articleId = location.state?.articleId;
+
     const [votes, setVotes] = useState<Vote[]>([
         { title: "", choices: [{ text: "" }] },
         { title: "", choices: [{ text: "" }] },
@@ -78,8 +82,18 @@ export default function Post_Vote_Page() {
             return;
         }
 
+        if (!articleId) {
+            alert('게시글 정보가 없습니다.');
+            return;
+        }
+
+        const payload = {
+            articleId: articleId,
+            votes: validVotes
+        };
+
         try {
-            const response = await axios.post('http://localhost:8000/post/vote/create', validVotes);
+            const response = await axios.post('http://localhost:8000/post/vote/create', payload);
             if (response.status === 200) {
                 alert('투표가 성공적으로 생성되었습니다.');
                 navigation('/news');

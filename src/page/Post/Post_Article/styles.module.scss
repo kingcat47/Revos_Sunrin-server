@@ -1,0 +1,52 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem 2rem 120px 2rem;
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(80, 104, 169, 0.05);
+  gap: 2rem;
+}
+
+input[type="file"] {
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+
+.categorybox {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+:global(.container) .text {
+  color: #333;
+  font-size: 1.1rem;
+}
+
+:global(.container) .input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+:global(.container) .button, :global(.container) button {
+  width: 300px;
+  height: 48px;
+  border-radius: 20px;
+  background: #5068A9;
+  color: #fff;
+  font-size: 1.2rem;
+  font-family: SUIT, sans-serif;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #3d4f7c;
+  }
+}

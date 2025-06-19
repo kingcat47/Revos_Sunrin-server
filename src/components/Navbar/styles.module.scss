@@ -18,7 +18,15 @@
     border-bottom: 1px solid #DADADA;
   }
 }
-
+.linkReset {
+  text-decoration: none;
+  margin: 0px;
+  padding: 0px;
+  color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .logo_text {
   font-size: 24px;
   font-family: SUIT,sans-serif;

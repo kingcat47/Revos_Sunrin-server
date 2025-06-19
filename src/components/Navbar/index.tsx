@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from './styles.module.scss';
 import SvgIcon from "../SvgIcon";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import LogoIcon from "../../assets/icon/LogoIcon.svg?react";
 import NavbarItem from "./NavbarItem";
+import {Link} from "react-router-dom";
 
 export default function NavbarComponent() {
     const [scrolled, setScrolled] = useState(false);
@@ -20,8 +19,10 @@ export default function NavbarComponent() {
 
     return (
         <div className={`${styles.container} ${scrolled ? styles.scrolled : ""}`}>
+            <Link to={'/news'} className={styles.linkReset}>
             <SvgIcon icon={<LogoIcon />} color={'#5068A9'} height={30} width={30} />
             <span className={styles.logo_text}>Revos</span>
+            </Link>
             <NavbarItem />
         </div>
     );
