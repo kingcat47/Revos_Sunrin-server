@@ -6,15 +6,14 @@ import Coin from '../../../assets/icon/Category/coin.svg?react'
 import People from '../../../assets/icon/Category/peoples.svg?react'
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function Post_Article_Page() {
     const [category, setCategory] = useState("");
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [image, setImage] = useState<File | null>(null);
-    const navigation = useNavigate();
-
+    const navigation = useNavigate()
     const handleCategoryClick = (categoryName: string) => {
         setCategory(categoryName);
         console.log("Selected Category:", categoryName);
@@ -34,7 +33,7 @@ export default function Post_Article_Page() {
         if (image) {
             formData.append('img', image);
         }
-        console.log(formData.get('img'));
+        console.log(formData.get('img'))
 
         axios.post('http://localhost:8000/post/create', formData, {
             headers: {
@@ -43,13 +42,7 @@ export default function Post_Article_Page() {
         })
             .then(response => {
                 console.log('Success:', response.data);
-                // articleId를 받아서 vote 페이지로 전달
-                const articleId = response.data.id || response.data.articleId;
-                if (articleId) {
-                    navigation('vote', { state: { articleId } });
-                } else {
-                    alert('게시글 ID를 받아오지 못했습니다.');
-                }
+                navigation('vote')
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -76,6 +69,7 @@ export default function Post_Article_Page() {
                 <CategoryComponent icon={<People />} text={'경제'} onClick={() => handleCategoryClick('경제')} />
             </div>
 
+            {/* 버튼 클릭 시 push 함수 호출 */}
             <ButtonComponent text={"다음"} onClick={pushArticleInfo} />
         </div>
     );

@@ -3,9 +3,13 @@ import styles from './styles.module.scss';
 import SvgIcon from "../SvgIcon";
 import LogoIcon from "../../assets/icon/LogoIcon.svg?react";
 import NavbarItem from "./NavbarItem";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function NavbarComponent() {
+interface NavbarComponentProps {
+    onCategorySelect: (category: string) => void;
+}
+
+export default function NavbarComponent({ onCategorySelect }: NavbarComponentProps) {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -20,10 +24,10 @@ export default function NavbarComponent() {
     return (
         <div className={`${styles.container} ${scrolled ? styles.scrolled : ""}`}>
             <Link to={'/news'} className={styles.linkReset}>
-            <SvgIcon icon={<LogoIcon />} color={'#5068A9'} height={30} width={30} />
-            <span className={styles.logo_text}>Revos</span>
+                <SvgIcon icon={<LogoIcon />} color={'#5068A9'} height={30} width={30} />
+                <span className={styles.logo_text}>Revos</span>
             </Link>
-            <NavbarItem />
+            <NavbarItem onCategorySelect={onCategorySelect} />
         </div>
     );
 }
