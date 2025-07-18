@@ -6,14 +6,15 @@ import Coin from '../../../assets/icon/Category/coin.svg?react'
 import People from '../../../assets/icon/Category/peoples.svg?react'
 import { useState } from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Post_Article_Page() {
     const [category, setCategory] = useState("");
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [image, setImage] = useState<File | null>(null);
-    const navigation = useNavigate()
+    const navigation = useNavigate();
+
     const handleCategoryClick = (categoryName: string) => {
         setCategory(categoryName);
         console.log("Selected Category:", categoryName);
@@ -33,7 +34,6 @@ export default function Post_Article_Page() {
         if (image) {
             formData.append('img', image);
         }
-        console.log(formData.get('img'))
 
         axios.post('http://localhost:8000/post/create', formData, {
             headers: {
@@ -41,8 +41,13 @@ export default function Post_Article_Page() {
             },
         })
             .then(response => {
-                console.log('Success:', response.data);
-                navigation('vote')
+                // articleId를 받아서 vote 페이지로 넘김
+                const articleId = response.data?.id;
+                if (articleId) {
+                    navigation('vote', { state: { articleId } });
+                } else {
+                    alert('게시글 생성 후 articleId를 받아오지 못했습니다.');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);

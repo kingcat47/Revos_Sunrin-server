@@ -7,4 +7,5 @@ export {default as WeatherComponent} from "./Weather";
 export {default as CategoryComponent} from "./Category";
 export {default as CommentWindow} from "./CommentWindow";
 export {default as TestComponent} from "./Test";
+export {default as GoogleBox} from "./Google_box";
 export { default as SvgIcon} from "./SvgIcon";

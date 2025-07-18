@@ -24,7 +24,7 @@ export default function NavbarItem({ onCategorySelect }: NavbarItemProps) {
                 <li className={styles.menu_items}><Link to="/board">게시판</Link></li>
                 {/*<li className={styles.menu_items}><Link to="/write">게시물 작성</Link></li>*/}
                 <li className={styles.menu_items}><Link to="/post">게시물 작성</Link></li>
-                {!isLogin && <li className={styles.menu_items}><Link to="/signin">로그인</Link></li>}
+                {!isLogin && <li className={styles.menu_items}><Link to="/login">로그인</Link></li>}
                 {isLogin && <li className={styles.menu_items}><Link to="/profile">프로필</Link></li>}
                 <li
                     className={styles.menu_items}

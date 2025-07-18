@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 function App() {
     const location = useLocation()
-    const try_login = location.pathname === '/signin' || location.pathname === '/signup';
+    const try_login = location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/signup/detail';
     const try_post = location.pathname.startsWith('/post');
     
     useEffect(() => {
